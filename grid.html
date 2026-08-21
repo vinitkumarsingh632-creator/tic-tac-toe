@@ -3,50 +3,30 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Document</title>
-    <style>
-        *{
-            margin: 0px;
-            padding: 0px;
-        }
-        .gridParent div{
-            border: 2px solid red;
-        }
-        .container{
-            display: flex;
-            justify-content: center;
-            align-items: center;
-            height: 100vh;
-        }
-        .gridParent{
-            display: grid;
-            grid-template-columns:repeat(3,200px) ;
-            grid-template-rows: repeat(3,200px);
-        }
-        #decisionPanel{
-            height: 100vh;
-            position: absolute;
-            width: 100vw;
-            background-color: red;
-            display: none;
-        }
-    </style>
+    <title>Tic Tac Toe</title>
+    <link rel="stylesheet" href="./src/grid.css">
 </head>
+
 <body>
     <script>
-        function closePanel (event) {
-            const target = event.target.parentElement
-            target.style.display = 'none'
+        function closePanel(event) {
+            const target = event.target.parentElement;
+            target.parentElement.style.display = 'none';
         }
     </script>
+
     <div class="container">
+          <h1>Easy <span id="heading">Level</span></h1>
         <div id="decisionPanel">
-            <div>
-                Rule
+            <div id="childPanel">
+                <div>Rule</div>
+
+                <div id="message"></div>
+
+                <button onclick="closePanel(event)">Close</button>
             </div>
-            <div></div>
-            <button onclick="closePanel(event)">Close</button>
         </div>
+
         <div class="gridParent">
             <div class="1"></div>
             <div class="2"></div>
@@ -58,7 +38,10 @@
             <div class="8"></div>
             <div class="9"></div>
         </div>
+
     </div>
+
     <script src="./src/easyLevel.js"></script>
+
 </body>
 </html>

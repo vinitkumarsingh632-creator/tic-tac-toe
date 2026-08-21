@@ -1,107 +1,136 @@
 const grids = document.querySelectorAll(".gridParent div");
-let move = null
-const decisionPanel = document.getElementById('decisionPanel')
-
-const firstMove = Math.random()
-if(firstMove > 0.5){
-    move = 'user'
-    console.log('User Move')
-    // alert('User Move')
+const gridParent = document.querySelector(".gridParent");
+const decisionPanel = document.getElementById("decisionPanel");
+const message = document.getElementById("message");
+let move = Math.random() > 0.5 ? "user" : "bot";
+if (move == 'user'){
+    showPanel('Your First Move')
 }
-else{
-    move = 'bot'
-    console.log('Bot\'s Move')
-}
+let gameOver = false;
 
-// Available Moves
+
 
 const winningCombination = [
-    [1,2,3],[4,5,6],[7,8,9],
-    [1,4,7],[2,5,8],[3,6,9],
-    [1,5,9],[3,5,7]
-]
+    [0, 1, 2],
+    [3, 4, 5],
+    [6, 7, 8],
+    [0, 3, 6],
+    [1, 4, 7],
+    [2, 5, 8],
+    [0, 4, 8],
+    [2, 4, 6]
+];
+
 function availableMoves() {
-  const avlMoves = [];
-  for (let moves of grids) {
-    if (moves.textContent == ""){
-        avlMoves.push(moves.className);
-    }
-  }
-  return avlMoves;
+    const moves = [];
+
+    grids.forEach((grid, index) => {
+        if (grid.textContent.trim() === "") {
+            moves.push(index);
+        }
+    });
+
+    return moves;
 }
 
 function checkWinner() {
-    let X = [];
-    let O = [];
+    for (const combination of winningCombination) {
+        const [a, b, c] = combination;
 
-    for (let items of grids) {
-        if (items.textContent === "X") {
-            X.push(Number(items.className));
-        }
-        else if (items.textContent === "O") {
-            O.push(Number(items.className));
-        }
-    }
+        const first = grids[a].textContent.trim();
 
-    for (let combination of winningCombination) {
-
-        if (combination.every(position => X.includes(position))) {
-            return "X Win";
-        }
-
-        if (combination.every(position => O.includes(position))) {
-            return "O Win";
+        if (
+            first !== "" &&
+            first === grids[b].textContent.trim() &&
+            first === grids[c].textContent.trim()
+        ) {
+            return first === "X" ? "X Win" : "O Win";
         }
     }
 
     return null;
 }
 
-// Adding Click Event
-if(move == 'bot'){
-    const avlMoves = availableMoves()
-    const botMove = Math.floor(Math.random() * avlMoves.length)
-    const moves = grids[Math.max(avlMoves[botMove] - 1, 0)].textContent = 'O'
-    move = 'user'
+function showPanel(text) {
+    message.textContent = text;
+    decisionPanel.style.display = "flex";
 }
 
-function checkDraw () {
-  const avlMoves = availableMoves()
-  if(avlMoves.length == 0) return 'draw'
-}
-const gridParent = document.getElementsByClassName("gridParent")[0];
-const clickListener = gridParent.addEventListener("click", (event) => {
-  const target = event.target;
-  console.log(move)
-  if(move == 'user'){
-    console.log('User')
-    const avlMoves = availableMoves()
-    const avl = avlMoves.includes(target.className)
-    if(!avl) {
-      alert('Already filled')
-      return;
+function checkGameState() {
+    const winner = checkWinner();
+
+    if (winner !== null) {
+        gameOver = true;
+        showPanel(winner);
+        gridParent.removeEventListener("click", handleClick);
+        return true;
     }
-     target.textContent = "X";
-        move = "bot";
 
-     if(checkWinner() == 'X Win'){
-      decisionPanel.style.display = 'block'
-      removeEventListener('click',clickListener)
-      return
-     }
-    setTimeout(()=>{
-         const avlMoves = availableMoves()
-    const botMove = Math.floor(Math.random() * avlMoves.length)
-    console.log(avlMoves)
-    console.log(botMove)
-    const moves = grids[Math.max(avlMoves[botMove] - 1,0)].textContent = 'O'
-    move = 'user'
-    },1000)
-  }
-});
+    if (availableMoves().length === 0) {
+        gameOver = true;
+        showPanel("Draw");
+        gridParent.removeEventListener("click", handleClick);
+        return true;
+    }
 
+    return false;
+}
 
+function makeBotMove() {
+    if (gameOver) {
+        return;
+    }
 
+    const moves = availableMoves();
 
+    if (moves.length === 0) {
+        checkGameState();
+        return;
+    }
 
+    const randomIndex = Math.floor(Math.random() * moves.length);
+    const position = moves[randomIndex];
 
+    grids[position].textContent = "O";
+
+    if (checkGameState()) {
+        return;
+    }
+
+    move = "user";
+}
+
+function handleClick(event) {
+    if (gameOver || move !== "user") {
+        return;
+    }
+
+    const target = event.target;
+
+    if (!target.matches(".gridParent div")) {
+        return;
+    }
+
+    if (target.textContent.trim() !== "") {
+        showPanel("Already Filled");
+        return;
+    }
+
+    target.textContent = "X";
+
+    if (checkGameState()) {
+        return;
+    }
+
+    move = "bot";
+
+    setTimeout(() => {
+        makeBotMove();
+    }, 1000);
+}
+
+gridParent.addEventListener("click", handleClick);
+
+if (move === "bot") {
+    makeBotMove();
+}
