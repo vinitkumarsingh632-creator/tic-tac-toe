@@ -2,9 +2,12 @@ const grids = document.querySelectorAll(".gridParent div");
 const gridParent = document.querySelector(".gridParent");
 const decisionPanel = document.getElementById("decisionPanel");
 const message = document.getElementById("message");
+document.getElementById("restartBtn").addEventListener("click", () => {
+    location.reload();
+});
 let move = Math.random() > 0.5 ? "user" : "bot";
 if (move == 'user'){
-    showPanel('Your First Move')
+    showPanel('Your turn! Make your move')
 }
 let gameOver = false;
 
