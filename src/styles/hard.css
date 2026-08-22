@@ -253,13 +253,12 @@ h1 {
     Arial, sans-serif;
 }
 #heading {
-  color: rgba(16, 246, 0, 0.966);
+  color: rgba(246, 49, 0, 0.966);
   text-decoration: overline;
   font-weight: 1000;
   font-size: 4rem;
   text-shadow: 10px 5px 10px rgba(0, 0, 0, 0.878);
 }
-
 
 @media (max-width: 500px) {
   .container {
@@ -302,7 +301,7 @@ h1 {
     align-items: center;
   }
   #heading {
-  color: rgba(16, 246, 0, 0.966);
+  color: rgba(246, 49, 0, 0.966);
   text-decoration: overline;
   font-weight: 1000;
   font-size: 2rem;
@@ -360,7 +359,7 @@ h1 {
     align-items: center;
   }
   #heading {
-  color: rgba(16, 246, 0, 0.966);
+  color: rgba(246, 49, 0, 0.966);
   text-decoration: overline;
   font-weight: 1000;
   font-size: 2rem;
