@@ -47,7 +47,7 @@ function checkWinner() {
             first === grids[b].textContent.trim() &&
             first === grids[c].textContent.trim()
         ) {
-            return first === "X" ? "X Win" : "O Win";
+            return first === "X" ? "Too easy 😎" : `"Oops... I won 😂`;
         }
     }
 
@@ -71,7 +71,7 @@ function checkGameState() {
 
     if (availableMoves().length === 0) {
         gameOver = true;
-        showPanel("Draw");
+        showPanel("Okay... you're not bad 🤨");
         gridParent.removeEventListener("click", handleClick);
         return true;
     }
@@ -115,7 +115,7 @@ function handleClick(event) {
     }
 
     if (target.textContent.trim() !== "") {
-        showPanel("Already Filled");
+        showPanel("Oops! That spot's taken 😂");
         return;
     }
 

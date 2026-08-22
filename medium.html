@@ -16,10 +16,13 @@
     </script>
 
     <div class="container">
+        <div class="restarting">
+            <button id="restartBtn" aria-label="Restart game">↻</button>
           <h1>Medium <span id="heading">Level</span></h1>
+        </div>
         <div id="decisionPanel">
             <div id="childPanel">
-                <div>Rule</div>
+                <div>Message</div>
 
                 <div id="message"></div>
 
@@ -28,6 +31,7 @@
         </div>
 
         <div class="gridParent">
+            <div class="0"></div>
             <div class="1"></div>
             <div class="2"></div>
             <div class="3"></div>
@@ -36,12 +40,11 @@
             <div class="6"></div>
             <div class="7"></div>
             <div class="8"></div>
-            <div class="9"></div>
         </div>
 
     </div>
 
-    <script src="./src/medium.js"></script>
+    <script src="./src/mediumLevel.js"></script>
 
 </body>
 </html>
