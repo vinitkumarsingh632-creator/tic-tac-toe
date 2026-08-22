@@ -135,6 +135,7 @@ function makeBotMove() {
     if (bestMove === null) return;
 
     grids[bestMove].textContent = "O";
+    grids[bestMove].style.color = 'red'
 
     const board = getBoard();
 
@@ -167,6 +168,7 @@ function clickHandler(event) {
     }
 
     grids[userMove].textContent = "X";
+    grids[userMove].style.color = 'green'
 
     const updatedBoard = getBoard();
 

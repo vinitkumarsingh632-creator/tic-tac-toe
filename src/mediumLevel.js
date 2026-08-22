@@ -91,6 +91,7 @@ function makeBotMove () {
     let avlCorners = findCorner()
     if( botWinningMove != null) {
         grids[botWinningMove].textContent = 'O'
+        grids[botWinningMove].style.color = 'red'
         if(checkWinner() == 'O win'){
             showPanel('O win')
             gridParent.removeEventListener('click',clickHandler)
@@ -104,6 +105,7 @@ function makeBotMove () {
     }
     else if (userWinningMove != null){
         grids[userWinningMove].textContent = 'O'
+        grids[userWinningMove].textContent = 'red'
         if(checkWinner() == 'O win'){
             showPanel('O win')
             gridParent.removeEventListener('click',clickHandler)
@@ -117,6 +119,7 @@ function makeBotMove () {
     }
     else if (avlCenter != null){
         grids[avlCenter].textContent = 'O'
+        grids[avlCenter].style.color = 'red'
         if(checkWinner() == 'O win'){
             showPanel('O win')
             gridParent.removeEventListener('click',clickHandler)
@@ -130,6 +133,7 @@ function makeBotMove () {
     }
     else if (avlCorners != null) {
         grids[avlCorners].textContent = 'O'
+        grids[avlCorners].style.color = 'red'
         if(checkWinner() == 'O win'){
             showPanel('O win')
             gridParent.removeEventListener('click',clickHandler)
@@ -175,6 +179,7 @@ function clickHandler (event) {
             return
         }
         grids[Number(target.className)].textContent = 'X'
+        grids[Number(target.className)].style.color = 'green'
         if(checkWinner() == 'X win'){
             showPanel('X win')
             gridParent.removeEventListener('click',clickHandler)

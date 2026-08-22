@@ -196,6 +196,7 @@ function makeBotMove() {
     }
 
     grids[action].textContent = "O";
+    grid[action].style.color = 'red'
 
     if (checkWinner() === "O win") {
 
@@ -268,7 +269,7 @@ function clickHandler(event) {
     }
 
     grids[userMove].textContent = "X";
-
+    grids[userMove].style.color = 'green'
     if (checkWinner() === "X win") {
 
         showPanel(
