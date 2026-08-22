@@ -1,120 +1,100 @@
-* {
-    margin: 0;
-    padding: 0;
-    box-sizing: border-box;
-}
-
 body {
-    background: #101418;
-    color: #eeeeee;
+    margin: 0;
+    background: #101416;
+    color: #ddd;
     font-family: Arial, sans-serif;
     line-height: 1.6;
 }
 
 header {
-    padding: 60px 20px 40px;
-    text-align: center;
-    border-bottom: 2px solid #28313b;
+    padding: 45px 20px;
+    border-bottom: 1px solid #333;
 }
 
 header h1 {
-    margin-bottom: 10px;
+    max-width: 850px;
+    margin: auto;
     color: #31c026;
     font-size: 42px;
 }
 
 header p {
-    color: #9da5ad;
+    max-width: 850px;
+    margin: 8px auto 0;
+    color: #888;
 }
 
 main {
-    width: 900px;
+    width: 850px;
     max-width: calc(100% - 30px);
-    margin: 50px auto;
+    margin: 40px auto;
 }
 
 section {
-    margin-bottom: 55px;
+    margin-bottom: 45px;
 }
 
-section h2 {
-    margin-bottom: 20px;
+h2 {
+    margin-bottom: 12px;
     color: #31c026;
-    font-size: 28px;
+    font-size: 26px;
 }
 
-section p {
+p {
     max-width: 750px;
-    margin-bottom: 15px;
-    color: #b8bec5;
+    color: #bdbdbd;
 }
 
 .levels {
     display: grid;
-    grid-template-columns: repeat(2, 1fr);
-    gap: 15px;
+    grid-template-columns: 1fr 1fr;
+    gap: 12px;
 }
 
 .level {
-    padding: 22px;
-    background: #181e24;
-    border: 2px solid #29323c;
-    border-radius: 8px;
-}
-
-.level span {
-    color: #707983;
-    font-size: 13px;
+    padding: 20px;
+    background: #171c20;
+    border: 1px solid #30363b;
 }
 
 .level h3 {
-    margin: 8px 0 12px;
-    font-size: 22px;
+    margin: 5px 0 10px;
+    color: white;
 }
 
 .level p {
     margin: 0;
-    font-size: 15px;
 }
 
 .easy {
-    border-top: 4px solid #31c026;
+    border-left: 4px solid #31c026;
 }
 
 .medium {
-    border-top: 4px solid #e0c52b;
+    border-left: 4px solid #e0c52b;
 }
 
 .hard {
-    border-top: 4px solid #e34b4b;
+    border-left: 4px solid #e34b4b;
 }
 
 .impossible {
-    border-top: 4px solid #9b59ff;
+    border-left: 4px solid #9b59ff;
 }
 
 footer {
     padding: 25px;
-    border-top: 2px solid #28313b;
-    color: #707983;
+    border-top: 1px solid #333;
+    color: #777;
     text-align: center;
-    font-size: 14px;
 }
 
 @media (max-width: 650px) {
-    header {
-        padding: 40px 15px 30px;
+    .levels {
+        grid-template-columns: 1fr;
     }
 
     header h1 {
         font-size: 32px;
-    }
-
-    main {
-        margin: 35px auto;
-    }
-
-    .levels {
-        grid-template-columns: 1fr;
     }
 }
