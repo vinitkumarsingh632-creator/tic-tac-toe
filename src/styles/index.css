@@ -174,3 +174,19 @@
         transform: none;
       }
     }
+a{
+  text-decoration: none;
+  color: white;
+  font-family: 'Franklin Gothic Medium', 'Arial Narrow', Arial, sans-serif;
+}
+.docs{
+  font-size: 1.8rem;
+}
+header{
+  background: rgba(48, 192, 38, 0.295);
+  height: 10vh;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  cursor: pointer;
+}

@@ -1,9 +1,12 @@
+import fs from "fs";
+
 const Q = {};
 
-const alpha = 0.5;   // learning rate
-const gamma = 0.9;   // discount factor
-const epsilon = 0.2; // exploration
+const alpha = 0.5;
+const gamma = 0.9;
+const epsilon = 0.2;
 
+const episodes = 50000;
 
 const winningCombination = [
     [0, 1, 2],
@@ -16,99 +19,120 @@ const winningCombination = [
     [2, 4, 6]
 ];
 
-
 function checkAvailableMoves(board) {
-    const availableMoves = [];
+    const moves = [];
 
     for (let i = 0; i < 9; i++) {
         if (board[i] === "") {
-            availableMoves.push(i);
+            moves.push(i);
         }
     }
 
-    return availableMoves;
+    return moves;
 }
-
 
 function checkWinner(board) {
-    const xMoves = [];
-    const oMoves = [];
-
-    for (let i = 0; i < 9; i++) {
-        if (board[i] === "X") {
-            xMoves.push(i);
-        }
-        else if (board[i] === "O") {
-            oMoves.push(i);
+    for (const [a, b, c] of winningCombination) {
+        if (
+            board[a] !== "" &&
+            board[a] === board[b] &&
+            board[a] === board[c]
+        ) {
+            return board[a];
         }
     }
 
-    for (let i = 0; i < winningCombination.length; i++) {
-
-        if (winningCombination[i].every(position =>
-            xMoves.includes(position)
-        )) {
-            return "X Win";
-        }
-
-        if (winningCombination[i].every(position =>
-            oMoves.includes(position)
-        )) {
-            return "O Win";
-        }
-    }
-
-    return false;
+    return null;
 }
-
 
 function checkDraw(board) {
     return checkAvailableMoves(board).length === 0;
 }
 
-
-// Convert board into a unique state
 function getState(board) {
     return JSON.stringify(board);
 }
 
-
-// Initialize a state in Q-table
 function initializeState(state, board) {
+    if (Q[state]) return;
 
-    if (!Q[state]) {
+    Q[state] = {};
 
-        Q[state] = {};
-
-        const availableMoves = checkAvailableMoves(board);
-
-        for (const action of availableMoves) {
-            Q[state][action] = 0;
-        }
+    for (const action of checkAvailableMoves(board)) {
+        Q[state][action] = 0;
     }
 }
 
+function getRandomAction(board) {
+    const moves = checkAvailableMoves(board);
 
-// Get action with highest Q-value
-function getBestAction(state) {
+    if (moves.length === 0) {
+        return null;
+    }
 
-    const actions = Object.keys(Q[state]);
-
-    return Number(
-        actions.reduce((best, current) => {
-
-            return Q[state][current] > Q[state][best]
-                ? current
-                : best;
-
-        })
-    );
+    return moves[
+        Math.floor(Math.random() * moves.length)
+    ];
 }
 
+function getBestAction(state) {
+    const actions = Object.keys(Q[state]);
 
-let episodes = 0;
+    let bestValue = -Infinity;
+    let bestActions = [];
 
-while (episodes < 200) {
+    for (const action of actions) {
+
+        const value = Q[state][action];
+
+        if (value > bestValue) {
+            bestValue = value;
+            bestActions = [Number(action)];
+        }
+        else if (value === bestValue) {
+            bestActions.push(Number(action));
+        }
+    }
+
+    return bestActions[
+        Math.floor(Math.random() * bestActions.length)
+    ];
+}
+
+function getAction(state, board) {
+
+    if (Math.random() < epsilon) {
+        return getRandomAction(board);
+    }
+
+    return getBestAction(state);
+}
+
+function getFutureQ(state) {
+
+    const values = Object.values(Q[state]);
+
+    if (values.length === 0) {
+        return 0;
+    }
+
+    return Math.max(...values);
+}
+
+function updateQ(state, action, reward, futureQ) {
+
+    const oldQ = Q[state][action];
+
+    Q[state][action] =
+        oldQ +
+        alpha * (
+            reward +
+            gamma * futureQ -
+            oldQ
+        );
+}
+
+for (let episode = 0; episode < episodes; episode++) {
 
     const board = [
         "", "", "",
@@ -116,222 +140,128 @@ while (episodes < 200) {
         "", "", ""
     ];
 
-    let previousState = null;
-    let previousAction = null;
-    let previousReward = 0;
+    let firstPlayer =
+        Math.random() < 0.5 ? "X" : "O";
 
+    if (firstPlayer === "O") {
+
+        const oFirstAction = getRandomAction(board);
+
+        board[oFirstAction] = "O";
+
+        if (checkDraw(board)) {
+            continue;
+        }
+
+        const xFirstResponse = getRandomAction(board);
+
+        board[xFirstResponse] = "X";
+
+        if (checkWinner(board) === "X" || checkDraw(board)) {
+            continue;
+        }
+
+    } else {
+
+        const xFirstAction = getRandomAction(board);
+
+        board[xFirstAction] = "X";
+
+        if (checkDraw(board)) {
+            continue;
+        }
+    }
 
     while (true) {
 
-        // =====================================
-        // X RANDOM MOVE
-        // =====================================
-
-        const availableMoves = checkAvailableMoves(board);
-
-        const randomIndex =
-            Math.floor(Math.random() * availableMoves.length);
-
-        const xAction = availableMoves[randomIndex];
-
-        board[xAction] = "X";
-
-
-        // =====================================
-        // X WINS
-        // =====================================
-
-        if (checkWinner(board) === "X Win") {
-
-            if (previousState !== null) {
-
-                const oldQ =
-                    Q[previousState][previousAction];
-
-                const reward = -100;
-
-                const futureQ = 0;
-
-                Q[previousState][previousAction] =
-                    oldQ +
-                    alpha * (
-                        reward +
-                        gamma * futureQ -
-                        oldQ
-                    );
-            }
-
-            break;
-        }
-
-
-        // =====================================
-        // DRAW AFTER X
-        // =====================================
-
-        if (checkDraw(board)) {
-
-            if (previousState !== null) {
-
-                const oldQ =
-                    Q[previousState][previousAction];
-
-                const reward = 0;
-
-                const futureQ = 0;
-
-                Q[previousState][previousAction] =
-                    oldQ +
-                    alpha * (
-                        reward +
-                        gamma * futureQ -
-                        oldQ
-                    );
-            }
-
-            break;
-        }
-
-
-        // =====================================
-        // CURRENT STATE FOR O
-        // =====================================
-
         const state = getState(board);
-
-
-        // =====================================
-        // INITIALIZE Q[state]
-        // =====================================
 
         initializeState(state, board);
 
+        const action = getAction(state, board);
 
-        // =====================================
-        // UPDATE PREVIOUS O ACTION
-        // =====================================
-
-        if (previousState !== null) {
-
-            const futureQ =
-                Math.max(
-                    ...Object.values(Q[state])
-                );
-
-            const oldQ =
-                Q[previousState][previousAction];
-
-            Q[previousState][previousAction] =
-                oldQ +
-                alpha * (
-                    previousReward +
-                    gamma * futureQ -
-                    oldQ
-                );
+        if (action === null) {
+            break;
         }
-
-
-        // =====================================
-        // EPSILON-GREEDY
-        // =====================================
-
-        let action;
-
-        if (Math.random() < epsilon) {
-
-            // -----------------------------
-            // EXPLORE
-            // -----------------------------
-
-            const moves =
-                checkAvailableMoves(board);
-
-            const randomIndex =
-                Math.floor(Math.random() * moves.length);
-
-            action = moves[randomIndex];
-
-        }
-        else {
-
-            // -----------------------------
-            // EXPLOIT
-            // -----------------------------
-
-            action = getBestAction(state);
-        }
-
-
-        // =====================================
-        // SAVE CURRENT DECISION
-        // =====================================
-
-        previousState = state;
-        previousAction = action;
-
-
-        // =====================================
-        // O MOVES
-        // =====================================
 
         board[action] = "O";
 
+        if (checkWinner(board) === "O") {
 
-        // =====================================
-        // O WINS
-        // =====================================
-
-        if (checkWinner(board) === "O Win") {
-
-            const reward = 100;
-
-            const oldQ =
-                Q[state][action];
-
-            const futureQ = 0;
-
-            Q[state][action] =
-                oldQ +
-                alpha * (
-                    reward +
-                    gamma * futureQ -
-                    oldQ
-                );
+            updateQ(
+                state,
+                action,
+                100,
+                0
+            );
 
             break;
         }
-
-
-        // =====================================
-        // DRAW AFTER O
-        // =====================================
 
         if (checkDraw(board)) {
 
-            const reward = 0;
-
-            const oldQ =
-                Q[state][action];
-
-            const futureQ = 0;
-
-            Q[state][action] =
-                oldQ +
-                alpha * (
-                    reward +
-                    gamma * futureQ -
-                    oldQ
-                );
+            updateQ(
+                state,
+                action,
+                0,
+                0
+            );
 
             break;
         }
 
-        previousReward = -5;
+        const xAction = getRandomAction(board);
+
+        board[xAction] = "X";
+
+        if (checkWinner(board) === "X") {
+
+            updateQ(
+                state,
+                action,
+                -100,
+                0
+            );
+
+            break;
+        }
+
+        if (checkDraw(board)) {
+
+            updateQ(
+                state,
+                action,
+                0,
+                0
+            );
+
+            break;
+        }
+
+        const nextState = getState(board);
+
+        initializeState(nextState, board);
+
+        const futureQ = getFutureQ(nextState);
+
+        updateQ(
+            state,
+            action,
+            0,
+            futureQ
+        );
     }
-
-
-    episodes++;
 }
 
+const output = `
+export const data = ${JSON.stringify(Q, null, 4)};
+`;
 
-console.log(Q);
+fs.writeFileSync(
+    "./RL_data.js",
+    output
+);
+
+console.log("Training complete.");
+console.log("Episodes:", episodes);
+console.log("States:", Object.keys(Q).length);
