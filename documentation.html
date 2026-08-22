@@ -9,208 +9,98 @@
 
 <body>
 
-    <header class="hero">
-        <div class="container">
-            <span class="badge">PROJECT DOCUMENTATION</span>
-            <h1>Tic Tac Toe <abbr title="Artificial Intelligence">AI</abbr></h1>
-            <p class="hero-description">
-                A browser-based Tic-Tac-Toe game with three levels of AI difficulty.
-            </p>
-        </div>
-    </header>
+<header>
+    <h1>Tic Tac Toe AI</h1>
+    <p>How I built the game and its AI levels.</p>
+</header>
 
-    <main class="container">
+<main>
 
-        <section class="documentation-section">
-            <h2>Project Overview</h2>
+    <section>
+        <h2>About the project</h2>
 
-            <p>
-                This project is a browser-based Tic-Tac-Toe game built with
-                HTML, CSS, and JavaScript.
-            </p>
+        <p>
+            This is a browser-based Tic-Tac-Toe game made with
+            HTML, CSS and JavaScript.
+        </p>
 
-            <p>
-                The main goal of the project was to build a Tic-Tac-Toe AI
-                with multiple difficulty levels and gradually improve the
-                bot's decision-making. Instead of using an external AI
-                service or library, the AI logic was implemented manually
-                in JavaScript.
-            </p>
+        <p>
+            I built the AI myself instead of using an external AI
+            service. The project started with a simple random bot
+            and gradually became more advanced.
+        </p>
 
-            <p>
-                The game currently has three difficulty levels:
-                <strong>Easy, Medium, and Hard.</strong>
-            </p>
-        </section>
+        <p>
+            There are four difficulty levels: Easy, Medium, Hard
+            and Impossible.
+        </p>
+    </section>
 
+    <section>
+        <h2>How to play</h2>
 
-        <section class="documentation-section">
-            <h2>How to Play</h2>
+        <p>
+            You play as X and the AI plays as O.
+        </p>
 
-            <p>
-                The player plays as <strong>X</strong>, while the AI plays
-                as <strong>O</strong>.
-            </p>
+        <p>
+            Click an empty square to make your move. The AI will
+            then make its move. Get three of your symbols in a row
+            to win.
+        </p>
+    </section>
 
-            <p>
-                The player selects an empty cell to place X. The AI then
-                makes its move. The game continues until either the player
-                or AI gets three matching symbols in a row, column, or
-                diagonal, or until all cells are filled and the game ends
-                in a draw.
-            </p>
+    <section>
+        <h2>AI levels</h2>
 
-            <p>
-                The game also includes a restart option and messages for
-                different game situations.
-            </p>
-        </section>
+        <div class="levels">
 
-
-       <section class="documentation-section">
-    <h2>Difficulty Levels</h2>
-
-    <div class="difficulty-grid">
-
-        <article class="difficulty-card easy">
-            <div class="level-number">01</div>
-            <h3>Easy</h3>
-
-            <p>
-                The Easy level uses simple decision-making. The AI
-                chooses an available move without trying to predict
-                the player's future moves.
-            </p>
-
-            <p>
-                This makes the AI relatively easy to beat and is
-                intended as an introductory difficulty.
-            </p>
-        </article>
-
-
-        <article class="difficulty-card medium">
-            <div class="level-number">02</div>
-            <h3>Medium</h3>
-
-            <p>
-                The Medium AI uses a rule-based strategy.
-            </p>
-
-            <p>
-                It first checks whether it can win immediately.
-                If it cannot win, it checks whether the player has
-                an immediate winning opportunity and blocks it.
-            </p>
-
-            <p>
-                After that, it prioritizes the center, followed by
-                available corners. If none of those options are
-                available, it chooses from the remaining moves.
-            </p>
-
-            <p>
-                This makes the Medium AI more strategic than the
-                Easy AI without requiring a full game-tree search.
-            </p>
-        </article>
-
-
-        <article class="difficulty-card hard">
-            <div class="level-number">03</div>
-            <h3>Hard</h3>
-
-            <p>
-                The Hard level uses the <strong>Minimax algorithm</strong>
-                to evaluate possible future game states.
-            </p>
-
-            <p>
-                The AI simulates its own moves and the player's
-                possible responses, allowing it to make decisions
-                based on future outcomes rather than only the current
-                board.
-            </p>
-
-            <div class="score-box">
-                <div>
-                    <span>AI Win</span>
-                    <strong>+1</strong>
-                </div>
-
-                <div>
-                    <span>Draw</span>
-                    <strong>0</strong>
-                </div>
-
-                <div>
-                    <span>Player Win</span>
-                    <strong>-1</strong>
-                </div>
+            <div class="level easy">
+                <span>01</span>
+                <h3>Easy</h3>
+                <p>
+                    The bot picks an available square randomly.
+                    It doesn't really try to beat you.
+                </p>
             </div>
 
-            <p>
-                The AI tries to maximize its score while the
-                simulated player tries to minimize it.
-            </p>
-        </article>
-
-
-        <article class="difficulty-card impossible">
-            <div class="level-number">04</div>
-            <h3>Impossible</h3>
-
-            <p>
-                The Impossible level is designed to play Tic-Tac-Toe
-                optimally using the Minimax algorithm.
-            </p>
-
-            <p>
-                Instead of choosing a move based only on the current
-                situation, the AI explores every possible continuation
-                of the game and evaluates the resulting outcomes.
-            </p>
-
-            <p>
-                The AI always chooses the move with the best guaranteed
-                outcome. If the player also plays perfectly, the game
-                will end in a draw. The player cannot force a win against
-                an optimal Tic-Tac-Toe AI.
-            </p>
-
-            <div class="score-box">
-                <div>
-                    <span>AI Win</span>
-                    <strong>+1</strong>
-                </div>
-
-                <div>
-                    <span>Draw</span>
-                    <strong>0</strong>
-                </div>
-
-                <div>
-                    <span>Player Win</span>
-                    <strong>-1</strong>
-                </div>
+            <div class="level medium">
+                <span>02</span>
+                <h3>Medium</h3>
+                <p>
+                    The bot checks for winning moves and blocks
+                    the player when necessary. It also prefers
+                    the center and corners.
+                </p>
             </div>
 
-            <p>
-                This is the highest difficulty and is intended to be
-                effectively unbeatable.
-            </p>
-        </article>
+            <div class="level hard">
+                <span>03</span>
+                <h3>Hard</h3>
+                <p>
+                    This level uses the Minimax algorithm. The bot
+                    looks ahead at possible moves before deciding.
+                </p>
+            </div>
 
-    </div>
-</section>
+            <div class="level impossible">
+                <span>04</span>
+                <h3>Impossible</h3>
+                <p>
+                    This is the strongest bot in the game. It uses
+                    reinforcement learning to learn which moves
+                    are better from different board states.
+                </p>
+            </div>
 
-    </main>
-
-    <footer>
-        <div class="container">
-            <p>Tic Tac Toe AI · Project Documentation</p>
         </div>
-    </footer>
+    </section>
+
+</main>
+
+<footer>
+    Tic Tac Toe AI — made as a learning project
+</footer>
 
 </body>
 </html>
