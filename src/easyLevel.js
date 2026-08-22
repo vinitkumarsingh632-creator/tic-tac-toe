@@ -47,7 +47,7 @@ function checkWinner() {
             first === grids[b].textContent.trim() &&
             first === grids[c].textContent.trim()
         ) {
-            return first === "X" ? "Too easy 😎" : `"Oops... I won 😂`;
+            return first === "X" ? "X win" : `O win`;
         }
     }
 
@@ -71,7 +71,7 @@ function checkGameState() {
 
     if (availableMoves().length === 0) {
         gameOver = true;
-        showPanel("Okay... you're not bad 🤨");
+        showPanel("Draw");
         gridParent.removeEventListener("click", handleClick);
         return true;
     }
@@ -95,6 +95,7 @@ function makeBotMove() {
     const position = moves[randomIndex];
 
     grids[position].textContent = "O";
+    grids[position].style.color = 'red'
 
     if (checkGameState()) {
         return;
@@ -115,11 +116,12 @@ function handleClick(event) {
     }
 
     if (target.textContent.trim() !== "") {
-        showPanel("Oops! That spot's taken 😂");
+        showPanel("Already Filled");
         return;
     }
 
     target.textContent = "X";
+    target.style.color = 'green'
 
     if (checkGameState()) {
         return;

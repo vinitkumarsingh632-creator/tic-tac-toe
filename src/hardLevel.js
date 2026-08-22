@@ -139,13 +139,13 @@ function makeBotMove() {
     const board = getBoard();
 
     if (checkWinner(board) === "O") {
-        showPanel("Calculated. Absolutely calculated. 🧠");
+        showPanel("O win");
         gridParent.removeEventListener("click", clickHandler);
         return;
     }
 
     if (checkDraw(board)) {
-        showPanel("Okay, that's a draw 🤝");
+        showPanel("Draw");
         gridParent.removeEventListener("click", clickHandler);
         return;
     }
@@ -162,7 +162,7 @@ function clickHandler(event) {
     const board = getBoard();
 
     if (board[userMove] !== "") {
-        showPanel("Nice try 😂 Pick another spot!");
+        showPanel("Already Filled");
         return;
     }
 
@@ -171,13 +171,13 @@ function clickHandler(event) {
     const updatedBoard = getBoard();
 
     if (checkWinner(updatedBoard) === "X") {
-        showPanel("Wait... you actually won?! 😳");
+        showPanel("X win");
         gridParent.removeEventListener("click", clickHandler);
         return;
     }
 
     if (checkDraw(updatedBoard)) {
-        showPanel("Okay, that's a draw 🤝");
+        showPanel("Draw");
         gridParent.removeEventListener("click", clickHandler);
         return;
     }

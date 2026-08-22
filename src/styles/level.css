@@ -9,6 +9,7 @@ body {
     overflow: hidden;
     font-family: "Courier New", monospace;
     color: white;
+    background-color: black;
 }
 
 .background {
@@ -32,8 +33,23 @@ body {
     border: 3px solid white;
     border-radius: 10px;
     text-align: center;
+    box-shadow: 0px 15px 25px white;
+    animation: moveShadow 0.5s infinite;
 }
-
+@keyframes moveShadow {
+  0%{
+      box-shadow: 0px 15px 25px rgb(245, 201, 5);
+  }
+  25%{
+    box-shadow: 20px 0px 25px rgb(107, 233, 3);
+  }
+  75%{
+    box-shadow: 0px -20px 25px rgb(4, 168, 233);
+  }
+  100%{
+    box-shadow: -20px 0px 25px rgb(4, 29, 250);
+  }
+}
 .levelText {
     font-size: 38px;
     margin-bottom: 30px;
@@ -55,31 +71,40 @@ body {
     text-decoration: none;
     font-family: "Courier New", monospace;
     font-size: 19px;
+    transition: background 2s ;
+}
+.easy{
+    position: relative;
+}
+.your{
+    transform: rotate(10deg);
+    display: block;
 }
 
-.level a:hover {
-    background: #31c026;
+.easy:hover {
+    background: linear-gradient(to right, rgb(172, 238, 172),rgb(107, 241, 107),rgb(31, 241, 31));
     color: black;
+    font-size: 21px;
+}
+.medium:hover {
+    background: linear-gradient(to right, rgb(233, 235, 128),rgb(196, 235, 55),rgb(179, 236, 21));
+    color: black;
+    font-size: 21px;
 }
 
+
+.hard:hover {
+    background: linear-gradient(to right, rgb(241, 149, 149), rgb(243, 96, 96), rgb(233, 40, 40));
+    color: rgb(250, 238, 238);
+    font-size: 21px;
+}
+.impossible:hover {
+    background: linear-gradient(to right, rgb(236, 139, 236) , rgb(240, 97, 240), rgb(236, 58, 236));
+    color: rgb(243, 241, 241);
+    font-size: 21px;
+}
 .level a:active {
     transform: scale(0.98);
-}
-
-.easy::before {
-    content: "🟢 ";
-}
-
-.medium::before {
-    content: "🟡 ";
-}
-
-.hard::before {
-    content: "🔴 ";
-}
-
-.impossible::before {
-    content: "💀 ";
 }
 
 @media (max-width: 500px) {

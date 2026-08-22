@@ -200,7 +200,7 @@ function makeBotMove() {
     if (checkWinner() === "O win") {
 
         showPanel(
-            "Calculated. Absolutely calculated. 🧠"
+            "O win"
         );
 
         gridParent.removeEventListener(
@@ -214,7 +214,7 @@ function makeBotMove() {
     if (checkDraw()) {
 
         showPanel(
-            "Okay, that's a draw 🤝"
+            "Draw"
         );
 
         gridParent.removeEventListener(
@@ -261,7 +261,7 @@ function clickHandler(event) {
     if (!availableMoves.includes(userMove)) {
 
         showPanel(
-            "Nice try 😂 Pick another spot!"
+            "Already Filled"
         );
 
         return;
@@ -272,7 +272,7 @@ function clickHandler(event) {
     if (checkWinner() === "X win") {
 
         showPanel(
-            "Wait... you actually won?! 😳"
+            "X win"
         );
 
         gridParent.removeEventListener(
@@ -286,7 +286,7 @@ function clickHandler(event) {
     if (checkDraw()) {
 
         showPanel(
-            "Okay, that's a draw 🤝"
+            "Draw"
         );
 
         gridParent.removeEventListener(

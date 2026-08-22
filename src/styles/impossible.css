@@ -6,7 +6,7 @@
 
 body {
     min-height: 100vh;
-    background: url("../../bg image.jpg") center / cover no-repeat;
+    background-color: black;
     font-family: Arial, sans-serif;
     color: white;
 }
@@ -22,7 +22,7 @@ body {
 }
 
 #heading {
-    color: #18f000;
+    color: #d400f0;
     font-family: "Trebuchet MS", Arial, sans-serif;
     font-size: 55px;
     font-weight: bold;
@@ -50,6 +50,7 @@ body {
     font-size: 70px;
     font-weight: bold;
     cursor: pointer;
+    box-shadow: 10px 10px 25px rgb(210, 0, 252);
 }
 
 .gridParent div:hover {
@@ -143,7 +144,7 @@ body {
 #childPanel button {
     width: 100%;
     height: 48px;
-    background: #18f000;
+    background: #ff4c05;
     border: 0;
     border-radius: 8px;
     color: #061006;
@@ -153,7 +154,7 @@ body {
 }
 
 #childPanel button:hover {
-    background: #12c900;
+    background: #ff4c05;
 }
 
 @media (max-width: 550px) {

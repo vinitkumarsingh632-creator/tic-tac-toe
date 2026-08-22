@@ -92,12 +92,12 @@ function makeBotMove () {
     if( botWinningMove != null) {
         grids[botWinningMove].textContent = 'O'
         if(checkWinner() == 'O win'){
-            showPanel('Calculated. Absolutely calculated. 🧠')
+            showPanel('O win')
             gridParent.removeEventListener('click',clickHandler)
             return
         }
         else if (checkDraw() == 'Draw'){
-            showPanel(`Okay, that's a draw 🤝`)
+            showPanel(`Draw`)
             gridParent.removeEventListener('click',clickHandler)
             return
         }
@@ -105,12 +105,12 @@ function makeBotMove () {
     else if (userWinningMove != null){
         grids[userWinningMove].textContent = 'O'
         if(checkWinner() == 'O win'){
-            showPanel('Calculated. Absolutely calculated. 🧠')
+            showPanel('O win')
             gridParent.removeEventListener('click',clickHandler)
             return
         }
         else if (checkDraw() == 'Draw'){
-            showPanel(`Okay, that's a draw 🤝`)
+            showPanel(`Draw`)
             gridParent.removeEventListener('click',clickHandler)
             return
         }
@@ -118,12 +118,12 @@ function makeBotMove () {
     else if (avlCenter != null){
         grids[avlCenter].textContent = 'O'
         if(checkWinner() == 'O win'){
-            showPanel('Calculated. Absolutely calculated. 🧠')
+            showPanel('O win')
             gridParent.removeEventListener('click',clickHandler)
             return
         }
         else if (checkDraw() == 'Draw'){
-            showPanel(`Okay, that's a draw 🤝`)
+            showPanel(`Draw`)
             gridParent.removeEventListener('click',clickHandler)
             return
         }
@@ -131,12 +131,12 @@ function makeBotMove () {
     else if (avlCorners != null) {
         grids[avlCorners].textContent = 'O'
         if(checkWinner() == 'O win'){
-            showPanel('Calculated. Absolutely calculated. 🧠')
+            showPanel('O win')
             gridParent.removeEventListener('click',clickHandler)
             return
         }
         else if (checkDraw() == 'Draw'){
-            showPanel(`Okay, that's a draw 🤝`)
+            showPanel(`Draw`)
             gridParent.removeEventListener('click',clickHandler)
             return
         }
@@ -148,12 +148,12 @@ function makeBotMove () {
     grids[avlMoves[random]].textContent = 'O'
     console.log(checkWinner() == 'O win')
     if(checkWinner() == 'O win'){
-            showPanel('Calculated. Absolutely calculated. 🧠')
+            showPanel('O win')
             gridParent.removeEventListener('click',clickHandler)
             return
         }
         else if (checkDraw() == 'Draw'){
-            showPanel(`Okay, that's a draw 🤝`)
+            showPanel(`Draw`)
             gridParent.removeEventListener('click',clickHandler)
             return
         }
@@ -171,17 +171,17 @@ function clickHandler (event) {
     if(move == 'user'){
         let userMove = Number(target.className)
         if(!avlMoves.includes(userMove)){
-            showPanel('Nice try 😂 Pick another spot!')
+            showPanel('Already Filled')
             return
         }
         grids[Number(target.className)].textContent = 'X'
         if(checkWinner() == 'X win'){
-            showPanel('Wait... you actually won?! 😳')
+            showPanel('X win')
             gridParent.removeEventListener('click',clickHandler)
             return
         }
         else if (checkDraw() == 'Draw'){
-            showPanel(`Okay, that's a draw 🤝`)
+            showPanel(`Draw`)
             gridParent.removeEventListener('click',clickHandler)
             return
         }
